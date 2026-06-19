@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유야 생일 축하해 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #1a0a2e;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #f5e6f8;
+    overflow-x: hidden;
+  }
+
+  .ocean-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(ellipse at 50% 0%, #3a0d5e 0%, #1a0a2e 40%, #0a0a2a 70%, #050518 100%);
+  }
+
+  .bubbles {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,182,255,0.08);
+    border: 1px solid rgba(255,182,255,0.15);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0% { transform: translateY(110vh) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+
+  .kirby-art {
+    font-size: 72px;
+    margin-bottom: 1rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255,182,255,0.5));
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #ffc6ff;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 30px rgba(255,150,255,0.6);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    color: #c9a8e0;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-date {
+    font-size: 0.85rem;
+    color: #9a7ab8;
+    letter-spacing: 0.05em;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2rem 0;
+    opacity: 0.4;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, #c9a8e0, transparent);
+  }
+  .divider span { font-size: 14px; color: #c9a8e0; }
+
+  .form-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,182,255,0.2);
+    border-radius: 20px;
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(12px);
+  }
+
+  .form-card h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffc6ff;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  .field-group { margin-bottom: 1rem; }
+
+  .field-label {
+    display: block;
+    font-size: 0.78rem;
+    color: #9a7ab8;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .field-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,182,255,0.25);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    color: #f5e6f8;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .field-input::placeholder { color: rgba(255,182,255,0.3); }
+  .field-input:focus {
+    outline: none;
+    border-color: rgba(255,182,255,0.6);
+    background: rgba(255,255,255,0.07);
+  }
+
+  .emoji-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .emoji-btn {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,182,255,0.2);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+  }
+  .emoji-btn:hover { background: rgba(255,182,255,0.15); transform: scale(1.1); }
+  .emoji-btn.selected { background: rgba(255,182,255,0.25); border-color: rgba(255,182,255,0.6); }
+
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #b06fd4, #e879b6);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .messages-section h2 {
+    font-size: 0.85rem;
+    color: #9a7ab8;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .msg-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,182,255,0.15);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s;
+  }
+  .msg-card:hover { border-color: rgba(255,182,255,0.3); }
+
+  .msg-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .msg-from {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .msg-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9a5cbf, #d96eb3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    flex-shrink: 0;
+  }
+  .msg-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e2c6f5;
+  }
+  .msg-time {
+    font-size: 0.72rem;
+    color: #6a4a88;
+  }
+  .msg-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #d4b8e8;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .msg-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .msg-emoji { font-size: 15px; }
+  .like-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,182,255,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    color: #c9a8e0;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-left: auto;
+  }
+  .like-btn:hover { background: rgba(255,182,255,0.15); }
+  .like-btn.liked { background: rgba(255,100,182,0.15); border-color: rgba(255,100,182,0.4); color: #ff9edd; }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: rgba(140,60,180,0.95);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    z-index: 100;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .loading {
+    text-align: center;
+    padding: 2.5rem;
+    color: #6a4a88;
+    font-size: 0.88rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: #6a4a88;
+    font-size: 0.88rem;
+    line-height: 2;
+  }
+
+  .kokomi-decoration {
+    text-align: center;
+    margin: 1.5rem 0;
+    font-size: 22px;
+    opacity: 0.6;
+    letter-spacing: 6px;
+  }
+
+  .char-count {
+    font-size: 0.72rem;
+    color: #6a4a88;
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  .error-msg {
+    font-size: 0.82rem;
+    color: #e879b6;
+    margin-top: 8px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"></div>
+<div class="stars" id="stars"></div>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="container">
+  <div class="hero">
+    <span class="kirby-art">🌸</span>
+    <h1 class="hero-name">이민정 (유야)</h1>
+    <p class="hero-sub">생일 축하해요 ✨</p>
+    <p class="hero-date">2026년 6월 19일</p>
+  </div>
+
+  <div class="kokomi-decoration">🐚 ✦ 🫧 ✦ 🌊 ✦ 🫧 ✦ 🐚</div>
+
+  <div class="form-card">
+    <h2>💌 축하 메시지 남기기</h2>
+
+    <div class="field-group">
+      <label class="field-label" for="senderName">이름 또는 닉네임</label>
+      <input class="field-input" id="senderName" type="text" placeholder="예: 민지, 코코미팬, 🐠" maxlength="20">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="msgText">메시지</label>
+      <textarea class="field-input" id="msgText" rows="4" placeholder="유야에게 따뜻한 말을 남겨주세요 🌸" maxlength="300"></textarea>
+      <div class="char-count" id="charCount">0 / 300</div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">함께 보낼 감정</label>
+      <div class="emoji-row" id="emojiRow">
+        <button class="emoji-btn" data-emoji="🎂">🎂</button>
+        <button class="emoji-btn" data-emoji="🌸">🌸</button>
+        <button class="emoji-btn" data-emoji="💜">💜</button>
+        <button class="emoji-btn" data-emoji="🌊">🌊</button>
+        <button class="emoji-btn" data-emoji="⭐">⭐</button>
+        <button class="emoji-btn" data-emoji="🐚">🐚</button>
+        <button class="emoji-btn" data-emoji="🎀">🎀</button>
+        <button class="emoji-btn" data-emoji="🫧">🫧</button>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitMessage()">메시지 보내기 ✉️</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <div class="messages-section">
+    <h2>받은 축하 메시지</h2>
+    <div id="messageList"><div class="loading">🫧 불러오는 중...</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const SUPABASE_URL = 'https://tihcuoxzbqxxqsvyljrl.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpaGN1b3h6YnF4eHFzdnlsanJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MDk5MTIsImV4cCI6MjA5NzM4NTkxMn0.EIXPT939g_FNx5RLVJDhXxyubSvarrns7DBTIeyjlGo';
+  const API = SUPABASE_URL + '/rest/v1/messages';
+  const HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+
+  const LIKED_KEY = 'yuya_liked_ids';
+  let likedIds = new Set();
+  let selectedEmojis = [];
+
+  function loadLiked() {
+    try {
+      const raw = localStorage.getItem(LIKED_KEY);
+      if (raw) likedIds = new Set(JSON.parse(raw));
+    } catch(e) {}
+  }
+
+  function saveLiked() {
+    try { localStorage.setItem(LIKED_KEY, JSON.stringify([...likedIds])); } catch(e) {}
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  function showError(msg) {
+    document.getElementById('errorMsg').textContent = msg;
+    setTimeout(() => document.getElementById('errorMsg').textContent = '', 3000);
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  function getInitials(name) {
+    if (!name) return '?';
+    return name.trim().slice(0, 2).toUpperCase();
+  }
+
+  function timeSince(iso) {
+    const diff = Date.now() - new Date(iso).getTime();
+    const m = Math.floor(diff / 60000);
+    if (m < 1) return '방금 전';
+    if (m < 60) return m + '분 전';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + '시간 전';
+    return Math.floor(h / 24) + '일 전';
+  }
+
+  async function fetchMessages() {
+    try {
+      const res = await fetch(API + '?order=created_at.desc&limit=100', {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+      if (!res.ok) throw new Error('fetch error');
+      return await res.json();
+    } catch(e) {
+      return null;
+    }
+  }
+
+  function renderMessages(messages) {
+    const list = document.getElementById('messageList');
+    if (!messages) {
+      list.innerHTML = '<div class="empty-state">🌊 메시지를 불러오지 못했어요<br>잠시 후 다시 시도해주세요</div>';
+      return;
+    }
+    if (messages.length === 0) {
+      list.innerHTML = '<div class="empty-state">🌸 아직 메시지가 없어요<br>첫 번째 축하를 남겨주세요!</div>';
+      return;
+    }
+    list.innerHTML = messages.map(m => {
+      const liked = likedIds.has(m.id);
+      const emojisArr = Array.isArray(m.emojis) ? m.emojis : [];
+      return `<div class="msg-card">
+        <div class="msg-header">
+          <div class="msg-from">
+            <div class="msg-avatar">${getInitials(m.name)}</div>
+            <span class="msg-name">${escHtml(m.name || '익명')}</span>
+          </div>
+          <span class="msg-time">${timeSince(m.created_at)}</span>
+        </div>
+        <p class="msg-text">${escHtml(m.text)}</p>
+        <div class="msg-footer">
+          ${emojisArr.length ? '<span class="msg-emoji">' + emojisArr.join(' ') + '</span>' : ''}
+          <button class="like-btn ${liked ? 'liked' : ''}" onclick="toggleLike(${m.id}, ${m.likes}, this)">
+            ${liked ? '💕' : '🤍'} ${m.likes || 0}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function toggleLike(id, currentLikes, btn) {
+    const wasLiked = likedIds.has(id);
+    const newLikes = wasLiked ? currentLikes - 1 : currentLikes + 1;
+
+    if (wasLiked) {
+      likedIds.delete(id);
+    } else {
+      likedIds.add(id);
+    }
+    saveLiked();
+
+    btn.className = 'like-btn' + (likedIds.has(id) ? ' liked' : '');
+    btn.innerHTML = (likedIds.has(id) ? '💕' : '🤍') + ' ' + newLikes;
+    btn.onclick = () => toggleLike(id, newLikes, btn);
+
+    try {
+      await fetch(API + '?id=eq.' + id, {
+        method: 'PATCH',
+        headers: HEADERS,
+        body: JSON.stringify({ likes: newLikes })
+      });
+    } catch(e) {}
+  }
+
+  async function submitMessage() {
+    const name = document.getElementById('senderName').value.trim();
+    const text = document.getElementById('msgText').value.trim();
+    if (!text) { showError('메시지를 입력해주세요 💌'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '전송 중...';
+
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({
+          name: name || '익명',
+          text,
+          emojis: selectedEmojis,
+          likes: 0
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'error');
+      }
+
+      document.getElementById('senderName').value = '';
+      document.getElementById('msgText').value = '';
+      document.getElementById('charCount').textContent = '0 / 300';
+      selectedEmojis = [];
+      document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+
+      showToast('✨ 메시지가 전달됐어요!');
+      const msgs = await fetchMessages();
+      renderMessages(msgs);
+    } catch(e) {
+      showError('전송에 실패했어요. 다시 시도해주세요 🌊');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '메시지 보내기 ✉️';
+    }
+  }
+
+  document.getElementById('emojiRow').addEventListener('click', e => {
+    const btn = e.target.closest('.emoji-btn');
+    if (!btn) return;
+    const em = btn.dataset.emoji;
+    if (btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      selectedEmojis = selectedEmojis.filter(x => x !== em);
+    } else {
+      btn.classList.add('selected');
+      selectedEmojis.push(em);
+    }
+  });
+
+  document.getElementById('msgText').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length + ' / 300';
+  });
+
+  function createStars() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = Math.random() * 2 + 1;
+      s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*3}s`;
+      c.appendChild(s);
+    }
+  }
+
+  function createBubbles() {
+    const c = document.getElementById('bubbles');
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const sz = 8 + Math.random() * 30;
+      b.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${8+Math.random()*14}s;animation-delay:${Math.random()*10}s`;
+      c.appendChild(b);
+    }
+  }
+
+  async function init() {
+    createStars();
+    createBubbles();
+    loadLiked();
+    const msgs = await fetchMessages();
+    renderMessages(msgs);
+
+    setInterval(async () => {
+      const msgs = await fetchMessages();
+      if (msgs) renderMessages(msgs);
+    }, 30000);
+  }
+
+  init();
+</script>
+</body>
+</html>
